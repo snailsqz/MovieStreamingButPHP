@@ -36,7 +36,7 @@
     }
     else
     {
-        move_uploaded_file($_FILES["picture"]["tmp_name"],"pictures/".$_FILES["picture"]["name"]);
+        move_uploaded_file($_FILES["picture"]["tmp_name"],"images/".$_FILES["picture"]["name"]);
         $picture = $_FILES['picture']['name'];
     }
     $sql = "insert into movies(title, description, release_date, director, rating, genre, running_time,
