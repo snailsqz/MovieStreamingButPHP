@@ -113,9 +113,4 @@ input[type="text"] {
 
 .checklogin {
   color: #5d6dfd;
-  position: absolute;
-}
-
-form {
-  position: relative;
 }

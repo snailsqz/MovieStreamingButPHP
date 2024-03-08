@@ -67,24 +67,26 @@
           mysqli_query($conn,"set character_set_results=utf8mb4");
           $sql = "select * from movies order by movie_id";
           $result = mysqli_query ($conn, $sql);
-          mysqli_data_seek($result, 1); // result start at column 2
-          $firstmovie = "select * from movies order by movie_id LIMIT 1";
-          $firstmovieresult = mysqli_query ($conn, $firstmovie);
+          $counter = 0;
           while ($rs = mysqli_fetch_array($result))
           {
-            while ($firstrs = mysqli_fetch_array($firstmovieresult)){
+            if($counter == 0){
               echo "<div>";
               echo "<a href='' class='moviedes'";
-              echo "<p>".$firstrs[1]."</p>";
+              echo "<p>".$rs[1]."</p>";
+              echo "<p>".$rs[2]."</p>";
               echo "</a>";
-              echo "<a href=''><img src ='image/$firstrs[8]'> class='bigimg'</a>";
+              echo "<a href=''><img src ='image/$rs[10]' class='bigimg'></a>";
               echo "</div>";
-              break;
+              $counter++; 
             }
-            echo "<div class='imgitem'>";
-            echo "<a href=''><img src ='image/$rs[8]'></a>";
-            echo "<a href=''>".$rs[1]."</a>";
-            echo "</div>";
+            else{
+              echo "<div class='imgitem'>";
+              echo "<a href=''><img src ='image/$rs[10]'></a>";
+              echo "<a href=''>".$rs[1]."</a>";
+              echo "</div>";
+            }
+            
           }
           mysqli_close ( $conn );
       ?>    

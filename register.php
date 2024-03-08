@@ -41,9 +41,9 @@
                 }
             }
             if($check == 0){
-                $sql = "insert into user(username, password, name, age, gender) values 
-                ('$Username', '$Password', '$Name', '$Age', '$Gender')";
-                mysqli_query($conn, $sql) or die("insert ลงตาราง book มีข้อผิดพลาดเกิดขึ้น" .mysqli_error());
+                $sql = "insert into user(username, password, name, age) values 
+                ('$Username', '$Password', '$Name', '$Age')";
+                mysqli_query($conn, $sql) or die("Error" .mysqli_error());
                 header("Location: login.php");
             }
             else{
@@ -59,16 +59,14 @@
               <br>
                 <?php
                 if(isset($_GET['error'])){
-                  echo "<p style='color:red;'>Username already exists</p>";
+                  echo "<p class='checklogin'>Username already exists</p>";
                 }
                 ?>
               <input type="text" name="username" minlength="3"  maxlength="10" placeholder="Username" required/>
               <br><br>
-              <input type="text" name="name" minlength="1"  maxlength="10" placeholder="Name" required/>
+              <input type="text" name="name" minlength="1"  maxlength="30" placeholder="Name" required/>
               <br><br>
-              <input type="text" name="age" minlength="1"  maxlength="10" placeholder="Age" required/>
-              <br><br>
-              <input type="text" name="gender" minlength="1"  maxlength="10" placeholder="Gender" required/>
+              <input type="text" name="age" minlength="1"  maxlength="3" placeholder="Age" required/>
               <br><br>
               <input class="password" type="text" name="password" minlength="1" placeholder="Password" required/>
               <input name="btnSubmit" type="submit" value="Submit" class="btn">

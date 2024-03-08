@@ -46,7 +46,7 @@
           <br>
           <?php
             if(isset($_GET['error']) == 1){
-              echo "<p style='color:red;'>Wrong Username or Password</p>";
+              echo "<p class='checklogin'>Wrong Username or Password</p>";
             }
           ?>
           <input type="text" name="name" placeholder="Username"/>
