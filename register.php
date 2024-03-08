@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/register.css">
+    <link rel="stylesheet" href="css/register.css">
     <title>Register</title>
     <style>
         .password{
@@ -73,7 +73,7 @@
               <input class="password" type="text" name="password" minlength="1" placeholder="Password" required/>
               <input name="btnSubmit" type="submit" value="Submit" class="btn">
             </form>
-            <p class="signin">Already have an account?⠀<a href="/login">Sign In!</a></p>
+            <p class="signin">Already have an account?⠀<a href="login.php">Sign In!</a></p>
         </div>
     </div>
     <?php
