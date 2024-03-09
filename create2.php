@@ -54,6 +54,13 @@
             $checkLogin = 0;
           }
     ?>
+    <?php
+          session_start();
+          $checkLogin = 1;
+          if (!isset($_SESSION['Username'])){
+            $checkLogin = 0;
+          }
+    ?>
     <header>
         <div class="headerbox1">
             <img src="image/Logo_JS_B_shade_white.png">
@@ -73,9 +80,10 @@
                 ?> 
                 <ul>
                   <li>
-                    <img src="image/noimage.jpg" alt="" class="profile">
+                    <?php?>
+                    <img src="image/<?php echo $_SESSION['User_Image']?>" alt="" class="profile">
                     <ul class="dropdown">
-                      <li><a href="#">Edit User</a></li>
+                      <li><a href="edituser.php?user_id=<?php echo $_SESSION['User_id']; ?>">Edit User</a></li>
                       <li><a href="logout.php">Sign out</a></li>
                     </ul>
                   </li>

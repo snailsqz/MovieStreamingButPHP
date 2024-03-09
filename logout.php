@@ -10,6 +10,7 @@
     <?php
         session_start();
         unset($_SESSION["Username"]);
+        unset($_SESSION["User_id"]);
         header("Location: index.php");
     ?>
   </body>

@@ -26,6 +26,8 @@
        if ( $rs ) {
           if ($rs['password'] == $Password) {
           $_SESSION['Username']=$Username;
+          $_SESSION['User_id']=$rs['user_id'];
+          $_SESSION['User_Image']=$rs['image'];
           header("Location: index.php");
        }
        else {
