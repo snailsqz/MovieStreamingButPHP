@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/create.css">
-    <title>Movie Create</title> <!-- Morgana -->
+    <title>Movie Create</title>
 </head>
 <?php
     $hostname = "localhost";
@@ -22,17 +22,43 @@
 ?>
 
 <body>
+<?php
+          session_start();
+          $checkLogin = 1;
+          if (!isset($_SESSION['Username'])){
+            $checkLogin = 0;
+          }
+    ?>
     <header>
         <div class="headerbox1">
             <img src="image/Logo_JS_B_shade_white.png">
             <a href="index.php">Home</a>
             <a href="typemovie.php">Movies</a>
             <a href="typeseries.php">Series</a>
-            <a href="">Favorite</a>
+            <?php
+              if($checkLogin == 1)
+              echo '<a href="">Favorite</a>';
+            ?>
         </div>
-      <div class="headerbox2"> 
-        <a class="signup" href="login.php">Sign In</a>
-      </div>
+        <div class="headerbox2"> 
+            <?php
+              if($checkLogin == 0)
+              echo '<a class="signup" href="login.php">Sign In</a>';
+              else {
+                ?> 
+                <ul>
+                  <li>
+                    <img src="image/noimage.jpg" alt="" class="profile">
+                    <ul class="dropdown">
+                      <li><a href="#">Edit User</a></li>
+                      <li><a href="logout.php">Sign out</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              <?php 
+                  } 
+              ?>
+        </div>
     </header>
     <div class="mainbox">
     <h1>Add Movie</h1>
@@ -51,7 +77,7 @@
                     <br><br>
                 </div>
                 <div class="right">
-                    <input type="text" name="release_date" placeholder="DD/MM/YYYY"/>
+                    <input type="text" name="release_date" placeholder="MM/DD/YYYY"/>
                     <br><br>
                     <input type="text" name="rating" placeholder="13+"/>
                     <br><br>

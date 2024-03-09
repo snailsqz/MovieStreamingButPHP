@@ -19,8 +19,8 @@
         <div class="headerbox1">
             <img src="image/Logo_JS_B_shade_white.png">
             <a href="index.php">Home</a>
-            <a href="">Movies</a>
-            <a href="">Series</a>
+            <a href="typemovie.php">Movies</a>
+            <a href="typeseries.php">Series</a>
             <?php
               if($checkLogin == 1)
               echo '<a href="">Favorite</a>';
