@@ -20,7 +20,6 @@
             $Password = $_GET['password'];
             $Name = $_GET['name'];
             $Age = $_GET['age'];
-            $Gender = $_GET['gender'];
             $check = 0;
             $hostname = "localhost";
             $username = "root";
