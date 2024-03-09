@@ -67,26 +67,31 @@
           mysqli_query($conn,"set character_set_results=utf8mb4");
           $sql = "select * from movies order by movie_id";
           $result = mysqli_query ($conn, $sql);
+          $num_rows = mysqli_num_rows($result); // checking if movie exists before
           $counter = 0;
+          if ($num_rows > 0) {
           while ($rs = mysqli_fetch_array($result))
           {
             if($counter == 0){
               echo "<div>";
-              echo "<a href='' class='moviedes'";
+              echo "<a href='movie.php?movie_id=".$rs[0]."' class='moviedes'";
               echo "<p>".$rs[1]."</p>";
               echo "<p>".$rs[2]."</p>";
               echo "</a>";
-              echo "<a href=''><img src ='image/$rs[10]' class='bigimg'></a>";
+              echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]' class='bigimg'></a>";
               echo "</div>";
               $counter++; 
             }
             else{
               echo "<div class='imgitem'>";
-              echo "<a href=''><img src ='image/$rs[10]'></a>";
-              echo "<a href=''>".$rs[1]."</a>";
+              echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]'></a>";
+              echo "<a href='movie.php?movie_id=".$rs[0]."'>".$rs[1]."</a>";
               echo "</div>";
             }
-            
+          }
+        }else {
+          echo "<a href='create.php' style='text-decoration: none; color: #faf0e6;  font-size: 24px;
+          '>Let's start adding some movies</a>";
           }
           mysqli_close ( $conn );
       ?>    

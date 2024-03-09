@@ -42,7 +42,7 @@
             if($check == 0){
                 $sql = "insert into user(username, password, name, age) values 
                 ('$Username', '$Password', '$Name', '$Age')";
-                mysqli_query($conn, $sql) or die("Error" .mysqli_error());
+                mysqli_query($conn, $sql) or die("Error" .mysqli_error($conn));
                 header("Location: login.php");
             }
             else{
