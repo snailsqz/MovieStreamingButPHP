@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Movie</title>
 </head>
@@ -25,7 +25,7 @@
             <a href="">Favorite</a>
             <?php }?>
             <?php if($_SESSION['User_role'] == 'Admin') {?>
-            <a href="dashboardmovies.php">Movies</a>
+            <a href="create.php">Add a Movie</a>
             <a href="dashboardusers.php">Users</a>
             <?php }?>
         </div>
@@ -50,14 +50,12 @@
               ?>
         </div>
     </header>
-    <?php
-      if(isset($_SESSION['Username']))
-        echo '<h2 class="fade-in-right"><i class="fa-solid fa-hands-clapping"></i> Welcome, ' . $_SESSION['Username'] . '!</h2>';
-      else
-        echo '<h2 class="fade-in-right" style="width: 170px;"><i class="fa-solid fa-hands-clapping"></i> Welcome !</h2>';
-    ?>
     <div class="mainbox">
-      <?php
+      <table>
+        <tr>
+          <th></th><th style="text-align:center;">ID</th><th style="text-align:center;">Title</th><th style="text-align:center;">Director</th><th style="text-align:center;">Type</th><th colspan="2" style="text-align: center;">Action</th>
+        </tr>
+        <?php
           $hostname = "localhost";
           $username = "root";
           $password = "";
@@ -73,56 +71,21 @@
           $result = mysqli_query ($conn, $sql);
           $num_rows = mysqli_num_rows($result);
           $counter = 0;
-          if ($num_rows > 0) {
           while ($rs = mysqli_fetch_array($result))
-          {
-            if($counter == 0){
-              echo "<div>";
-              echo "<a href='movie.php?movie_id=".$rs[0]."' class='moviedes'";
-              echo "<p>".$rs[1]."</p>";
-              echo "<p>".$rs[2]."</p>";
-              echo "</a>";
-              echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]' class='bigimg'></a>";
-              echo "</div>";
-              $counter++; 
-            }
-            else{
-              echo "<div class='imgitem'>";
-              echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]'></a>";
-              echo "<a href='movie.php?movie_id=".$rs[0]."'>".$rs[1]."</a>";
-              echo "</div>";
-            }
-          }
-        }else {
-          echo "<a href='create.php' style='text-decoration: none; color: #faf0e6;  font-size: 24px;
-          '>Let's start adding some movies</a>";
-          }
-          mysqli_close ( $conn );
-      ?>    
+          { ?>
+          <tr>
+            <td><img src="image/<?php echo $rs[10]?>" alt="" class="profile"></td>
+            <td style="text-align: center; width: 50px;"><?php echo $rs[0]?></td>
+            <td style="width: 250px; text-align:center;"><?php echo $rs[1]?></td>
+            <td style="width: 250px; text-align:center;"><?php echo $rs[5]?></td>
+            <td style="max-width: 150px; text-align:center;"><?php echo $rs[7]?></td>
+            <td style="text-align: center; width: 80px;"><a href="editmovie.php?movie_id=<?php echo $rs[0]?>" style="color:#3ff78b">Edit</a></td>
+            <td style="text-align: center; width: 80px;"> <a href="deletemovie.php?movie_id=<?php echo $rs[0]?>"onclick="return confirm('Do you confirm to delete this movie?')" style="color:#f73f3f">Delete</a></td>
+          </tr>
+      <?php
+          }?>
+    </table>
     </div>
-    <footer style="margin: 300px 0 0 0;">
-      <p>NetBoss &copy; 2024 KMUTNB Project</p>
-      <table>
-        <tr>
-          <th>Developers</th>
-          <th>GitHub</th>
-        </tr>
-        <tr>
-          <td>Pawee Indulakshana</td>
-          <td><a href="https://github.com/snailsqz"><i class="fa-brands fa-github" style="font-size: 20px; color:aliceblue;"></i></a></td>
-        </tr>
-        <tr>
-          <td>Jiramet Sakulkittavorn</td>
-          <td><a href="https://github.com/Sencoool"><i class="fa-brands fa-github" style="font-size: 20px; color:aliceblue;"></i></a></td>
-        </tr>
-        <tr>
-          <td>Nuttawat Amorntanont</td>
-          <td><a href="https://github.com/Nuttawat28"><i class="fa-brands fa-github" style="font-size: 20px; color:aliceblue;"></i></a></td>
-        </tr>
-
-      </table>
-      <p>For Educational Purpose Only</p>
       
-    </footer>
 </body>
 </html>
