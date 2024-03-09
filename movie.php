@@ -33,7 +33,6 @@
                 ?> 
                 <ul>
                   <li>
-                    <?php?>
                     <img src="image/<?php echo $_SESSION['User_Image']?>" alt="" class="profile">
                     <ul class="dropdown">
                       <li><a href="edituser.php?user_id=<?php echo $_SESSION['User_id']; ?>">Edit User</a></li>
@@ -138,40 +137,35 @@
   <?php
         if(isset($_GET['btnComment']))
         {
-            // $Username = $_GET['username'];
-            // $Password = $_GET['password'];
-            // $Name = $_GET['name'];
-            // $Age = $_GET['age'];
-            // $check = 0;
-            // $userID = $_SESSION['user_id'];
-            $movie_id = $_GET['movie_id'];
-            $score = $_GET['score'];
-            $comment = $_GET['comment'];
+          $userID = $_SESSION['User_id'];
+          $movie_id = $_GET['movie_id'];
+          $score = $_GET['score'];
+          $comment = $_GET['comment'];
 
-            $hostname = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "streaming";
-            $conn = mysqli_connect( $hostname, $username, $password );
-            if ( ! $conn ) die ( "ไม่สามารถติดต่อกับ MySQL ได้");
-            mysqli_select_db ( $conn, $dbname )or die ( "ไม่สามารถเลือกฐานข้อมูล streaming ได้" );
-            mysqli_query($conn,"set character_set_connection=utf8mb4");
-            mysqli_query($conn,"set character_set_client=utf8mb4");
-            mysqli_query($conn,"set character_set_results=utf8mb4");
+          $hostname = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "streaming";
+          $conn = mysqli_connect( $hostname, $username, $password );
+          if ( ! $conn ) die ( "ไม่สามารถติดต่อกับ MySQL ได้");
+          mysqli_select_db ( $conn, $dbname )or die ( "ไม่สามารถเลือกฐานข้อมูล streaming ได้" );
+          mysqli_query($conn,"set character_set_connection=utf8mb4");
+          mysqli_query($conn,"set character_set_client=utf8mb4");
+          mysqli_query($conn,"set character_set_results=utf8mb4");
 
-            $sql = "insert into reviews(movie_id , score, comment) values ('$movie_id','$score', '$comment')";
-                mysqli_query($conn, $sql) or die("Error" .mysqli_error($conn));
-            
+          $sql = "insert into reviews(movie_id, user_id , score, comment) values ('$movie_id','$userID','$score', '$comment')";
+          mysqli_query($conn, $sql) or die("Error" .mysqli_error($conn));
+          header("Location: movie.php?movie_id=$movie_id");
         }
     ?>
     <hr>
     <h1>Comment Section</h1>
     <div class="boxreview">
-      <!-- <% if (moviedata.userName != "" ) { %> -->
+      <?php  if (isset($_SESSION['Username'])){ ?>
         <label for="">Score</label>  
       <form method="get" action="#" class="formment">
         <?php
-        echo "<input type='hidden' name='movie_id' value='$movieIdURL'>"
+        echo "<input type='hidden' name='movie_id' value='$movieIdURL'>";
         ?>
         <input type="number" name="score" id="myinput" min="0" max="5"  placeholder="0" >
         <div>
@@ -179,35 +173,55 @@
         <input name="btnComment" type="submit" value="Comment">
         </div>
        </form>
-       <!-- <% } else { %> -->
-        <p style="color: #faf0e6; font-size: 30px;">Please login before comment</p>
-       <!-- <% } %> -->
+       <?php } else { 
+        echo "<p style='color: #faf0e6; font-size: 30px;'>Please login before comment</p>";
+        } ?>
     </div>
-    <!-- <div class="boxread">
-
+    <div class="boxread">
+      <?php
+        $movie_id = $_GET['movie_id'];
+        $commentsql = "SELECT movies.movie_id, user.user_id, user.username, user.image, reviews.review_id, reviews.score, reviews.comment
+        FROM movies
+        INNER JOIN reviews ON movies.movie_id = reviews.movie_id
+        INNER JOIN user ON reviews.user_id = user.user_id
+        WHERE reviews.movie_id = $movie_id;";
+        $resultcomment = mysqli_query ($conn, $commentsql);
+        while ($rs = mysqli_fetch_array($resultcomment))
+        {
+      ?>
         <div class="eachcom">
-
             <div class="profcom">
-              <img src="/images/<%= userData[j].profilePicture %> " alt="">
+              <?php echo "<img src='image/".$rs[3]."' alt=''>" ?>
             </div>
             <div class="comsect">
              
               <div class="usersect">
-                <p style="font-weight: 500;"> </p>
+                <p style="font-weight: 500;"><?php echo $rs[2] ?></p>
                 <p style="margin-top: 1px; margin-left: 5px;"> <br></p>
               </div>
 
               <p class="usercomment">
+              <?php 
+              echo $rs[5]." / 5";
+              echo " | ";
+              echo $rs[6];
+              if (!isset($_SESSION['Username'])){
+                $checkLogin = 0;
+              } else {
+                if ($_SESSION['User_id'] == $rs[1]){
+                  echo "<br>";
+                }
+              ?>
              <br>
                 <a href="/deletereview/<%=reviewData[i].review_id%>" onclick="return confirm('Do you confirm?')">Remove</a>
-
               </p>
             </div>
-
-
         </div>
-
-    </div> -->
+        <?php 
+          }
+        } 
+        ?>
+    </div>
   </div>
   <?php 
   mysqli_close($conn);
