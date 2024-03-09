@@ -123,7 +123,7 @@
                         echo "<p>ประเภท : $type </p>";
                         echo "<br><br>";  
                         echo "<p>กำลัง Redirect กลับหน้า Add Movie </p>";
-                        echo "<script>setTimeout(function() { window.location.href='create.php'; }, 5000);</script>";
+                        echo "<script>setTimeout(function() { window.location.href='create.php'; }, 10);</script>";
                     ?>
                 </div>
             </div>

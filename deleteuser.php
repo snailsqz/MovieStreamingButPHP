@@ -34,12 +34,15 @@
                         unlink($imagePath);
                     }
                 }
-                
-                
-                unset($_SESSION["Username"]);
-                unset($_SESSION["User_id"]);
-                unset($_SESSION["User_Image"]);
-                header("Location: index.php");
+                if($userSessionId == $user_id){
+                    unset($_SESSION["Username"]);
+                    unset($_SESSION["User_id"]);
+                    unset($_SESSION["User_Image"]);
+                    header("Location: index.php");
+                }
+                else{
+                    header("Location: dashboardusers.php");
+                }
         ?>
     </body>
 </html>

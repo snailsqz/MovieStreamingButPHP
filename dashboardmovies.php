@@ -69,8 +69,6 @@
           mysqli_query($conn,"set character_set_results=utf8mb4");
           $sql = "select * from movies order by movie_id";
           $result = mysqli_query ($conn, $sql);
-          $num_rows = mysqli_num_rows($result);
-          $counter = 0;
           while ($rs = mysqli_fetch_array($result))
           { ?>
           <tr>
@@ -80,7 +78,7 @@
             <td style="width: 250px; text-align:center;"><?php echo $rs[5]?></td>
             <td style="max-width: 150px; text-align:center;"><?php echo $rs[7]?></td>
             <td style="text-align: center; width: 80px;"><a href="editmovie.php?movie_id=<?php echo $rs[0]?>" style="color:#3ff78b">Edit</a></td>
-            <td style="text-align: center; width: 80px;"> <a href="deletemovie.php?movie_id=<?php echo $rs[0]?>"onclick="return confirm('Do you confirm to delete this movie?')" style="color:#f73f3f">Delete</a></td>
+            <td style="text-align: center; width: 80px;"> <a href="<?php echo 'deletemovie.php?movie_id='.$rs[0]?>"onclick="return confirm('Do you confirm to delete this movie?')" style="color:#f73f3f">Delete</a></td>
           </tr>
       <?php
           }?>

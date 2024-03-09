@@ -85,7 +85,7 @@
         if ($_FILES['picture']['name'] == "") {
             $sql = "UPDATE movies SET title = '$title', description = '$description', 
             teaser= '$teaser', release_date = '$release_date' , director = '$director' , 
-            rating = '$rating' , type = '$type', genre = '$genre' , director = '$running_time' WHERE movie_id = $movie_id";
+            rating = '$rating' , type = '$type', genre = '$genre' , running_time = '$running_time' WHERE movie_id = $movie_id";
             $result = mysqli_query($conn, $sql);
             if ($result) {
                 echo "Movie information updated successfully.";
@@ -95,10 +95,22 @@
             }
         } else {
             move_uploaded_file($_FILES["picture"]["tmp_name"],"image/".$_FILES["picture"]["name"]);
+            $sqlpicture = "SELECT picture FROM movies WHERE movie_id = $movie_id";
+            $movie_picture = mysqli_query($conn, $sqlpicture);
+            if ($movie_picture) {
+                $row = mysqli_fetch_assoc($movie_picture);
+                $picture = $row['picture'];
+                if ($picture != "noimage2.jpg") {
+                    $imagePath = "image/$picture";
+                    if (file_exists($imagePath)) {
+                        unlink($imagePath);
+                    }
+                }
+            }
             $picture = $_FILES["picture"]["name"];
             $sql = "UPDATE movies SET title = '$title', description = '$description', teaser= '$teaser', 
             release_date = '$release_date' , director = '$director' , rating = '$rating' , type = '$type'
-            , genre = '$genre' , director = '$running_time' , picture = '$picture'
+            , genre = '$genre' , running_time = '$running_time' , picture = '$picture'
              WHERE movie_id = $movie_id";            
              $result = mysqli_query($conn, $sql);
             if ($result) {

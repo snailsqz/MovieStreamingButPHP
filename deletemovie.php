@@ -8,38 +8,37 @@
     </head>
     <body>
         <?php
-                $hostname = "localhost";
-                $username = "root";
-                $password = "";
-                $dbName = "streaming";
-                $conn = mysqli_connect($hostname, $username, $password);
-                if (!$conn) {
-                        die("Fail to connect");
-                }
-                mysqli_select_db($conn, $dbName) or die("Can't Choose db");
-                mysqli_query($conn, "set character_set_connection=utf8mb4");
-                mysqli_query($conn, "set character_set_client=utf8mb4");
-                mysqli_query($conn, "set character_set_results=utf8mb4");
+            $hostname = "localhost";
+            $username = "root";
+            $password = "";
+            $dbName = "streaming";
+            $conn = mysqli_connect($hostname, $username, $password);
+            if (!$conn) {
+                    die("Fail to connect");
+            }
+            mysqli_select_db($conn, $dbName) or die("Can't Choose db");
+            mysqli_query($conn, "set character_set_connection=utf8mb4");
+            mysqli_query($conn, "set character_set_client=utf8mb4");
+            mysqli_query($conn, "set character_set_results=utf8mb4");
 
-                session_start();
-                $userSessionId = $_SESSION['User_id'];
-                $userSessionImage = $_SESSION['User_Image'];
-                $user_id = $_GET['user_id'];
-                
-                $sql = "DELETE FROM user WHERE user_id = $user_id";
-                $result = mysqli_query($conn, $sql);
-                if($userSessionImage != "noimage.jpg"){
-                    $imagePath = "image/$userSessionImage";
+            $movie_id = $_GET['movie_id'];
+            
+            $sqlpicture = "SELECT picture FROM movies WHERE movie_id = $movie_id";
+            $movie_picture = mysqli_query($conn, $sqlpicture);
+            if ($movie_picture) {
+                $row = mysqli_fetch_assoc($movie_picture);
+                $picture = $row['picture'];
+                if ($picture != "noimage2.jpg") {
+                    $imagePath = "image/$picture";
                     if (file_exists($imagePath)) {
                         unlink($imagePath);
                     }
                 }
-                
-                
-                unset($_SESSION["Username"]);
-                unset($_SESSION["User_id"]);
-                unset($_SESSION["User_Image"]);
-                header("Location: index.php");
+            }
+            $sql = "DELETE FROM movies WHERE movie_id = $movie_id";
+            $result = mysqli_query($conn, $sql);
+            
+            header("Location: dashboardmovies.php");
         ?>
     </body>
 </html>
