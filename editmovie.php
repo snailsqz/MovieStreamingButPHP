@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/edituser.css">
+    <link rel="stylesheet" href="css/create.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Movie</title>
 </head>
@@ -52,6 +52,7 @@
     </header>
     <?php
     if (isset($_POST['btnSubmit'])) {
+        $movie_id = $_GET['movie_id'];
         $title = $_POST['title'];
         $description = $_POST['description'];
         $release_date = $_POST['release_date'];
@@ -61,6 +62,7 @@
         $genre = $_POST['genre'];
         $teaser = $_POST['teaser_url'];
         $type = $_POST['type'];
+        $running_time = $_POST['running_time'];
         $pictureName = @$_FILES['picture']['name'];
         $pictureType = @$_FILES['picture']['type'];
         $pictureSize = @$_FILES['picture']['size'];
@@ -81,25 +83,29 @@
         mysqli_query($conn, "set character_set_results=utf8mb4");
 
         if ($_FILES['picture']['name'] == "") {
-            $sql = "UPDATE user SET username = '$Username', password = '$Password', name = '$Name', age = '$Age' WHERE user_id = $userSessionId";
+            $sql = "UPDATE movies SET title = '$title', description = '$description', 
+            teaser= '$teaser', release_date = '$release_date' , director = '$director' , 
+            rating = '$rating' , type = '$type', genre = '$genre' , director = '$running_time' WHERE movie_id = $movie_id";
             $result = mysqli_query($conn, $sql);
             if ($result) {
-                echo "User information updated successfully.";
-                header("Location: index.php");
+                echo "Movie information updated successfully.";
+                header("Location: dashboardmovies.php");
             } else {
-                echo "Failed to update user information.";
+                echo "Failed to update movie information.";
             }
         } else {
             move_uploaded_file($_FILES["picture"]["tmp_name"],"image/".$_FILES["picture"]["name"]);
             $picture = $_FILES["picture"]["name"];
-            $_SESSION['User_Image'] = $picture;
-            $sql = "UPDATE user SET username = '$Username', password = '$Password', name = '$Name', age = '$Age', image = '$picture' WHERE user_id = $userSessionId";
-            $result = mysqli_query($conn, $sql);
+            $sql = "UPDATE movies SET title = '$title', description = '$description', teaser= '$teaser', 
+            release_date = '$release_date' , director = '$director' , rating = '$rating' , type = '$type'
+            , genre = '$genre' , director = '$running_time' , picture = '$picture'
+             WHERE movie_id = $movie_id";            
+             $result = mysqli_query($conn, $sql);
             if ($result) {
-                echo "User information updated successfully.";
-                header("Location: index.php");
+                echo "Movie information updated successfully.";
+                header("Location: dashboardmovies.php");
             } else {
-                echo "Failed to update user information.";
+                echo "Failed to update movie information.";
             }
         }
         mysqli_close($conn);
@@ -116,8 +122,7 @@
         mysqli_query($conn,"set character_set_connection=utf8mb4");
         mysqli_query($conn,"set character_set_client=utf8mb4");
         mysqli_query($conn,"set character_set_results=utf8mb4");
-        $userSessionId = $_SESSION['User_id'];
-        $sql = "SELECT * FROM user WHERE user_id = $userSessionId";
+        $sql = "select * from movies order by movie_id";
         $result = mysqli_query ($conn, $sql);
         $counter = 0;
         while ($rs = mysqli_fetch_array($result)){
@@ -131,7 +136,7 @@
                     <br><br>
                     <input type="text" name="director" value="<?php echo $rs[5]?>"/>
                     <br><br>
-                    <textarea name="description" id="" cols="50" rows="30" style=" resize: none;" value="<?php echo $rs[2]?>"></textarea>
+                    <textarea name="description" cols="50" rows="30" style=" resize: none;" placeholder="<?php echo $rs[2]?>"><?php echo $rs[2]?></textarea>
                     <br><br>
                     <input type="text" name="teaser_url" value="<?php echo $rs[3]?>"/>
                     <br><br>
@@ -153,7 +158,7 @@
                         <option name="type" value="Series">Series</option>
                     </select>
                     <br><br>
-                    <input type="submit" value="Add Movie" class="btn"/>
+                    <input type="submit" value="Update Movie" class="btn" name="btnSubmit"/>
                     </label>
                 </div>
             </div>
