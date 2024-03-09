@@ -68,7 +68,7 @@
           mysqli_query($conn,"set character_set_results=utf8mb4");
           $sql = "select * from movies order by movie_id";
           $result = mysqli_query ($conn, $sql);
-          $num_rows = mysqli_num_rows($result); // checking if movie exists before
+          $num_rows = mysqli_num_rows($result);
           $counter = 0;
           if ($num_rows > 0) {
           while ($rs = mysqli_fetch_array($result))
@@ -110,7 +110,7 @@
         </tr>
         <tr>
           <td>Jiramet Sakulkittavorn</td>
-          <td><a href="https://github.com/snailsqz"><i class="fa-brands fa-github" style="font-size: 20px; color:aliceblue;"></i></a></td>
+          <td><a href="https://github.com/Sencoool"><i class="fa-brands fa-github" style="font-size: 20px; color:aliceblue;"></i></a></td>
         </tr>
         <tr>
           <td>Nuttawat Amorntanont</td>

@@ -131,7 +131,7 @@
         <br><br>
         <label for="">Profile Picture</label>
         <input type="file" name="picture"/>
-        <a href="/deleteuser>"onclick="return confirm('You delete really')">Delete User</a>
+        <a href="deleteuser.php?user_id=<?php echo $_SESSION['User_id']; ?>"onclick="return confirm('You delete really')">Delete User</a>
         <input name="btnSubmit" type="submit" value="Submit" class="btn" />
       </form>
     </div>
