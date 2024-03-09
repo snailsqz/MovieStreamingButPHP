@@ -36,7 +36,7 @@
                   <li>
                     <img src="image/noimage.jpg" alt="" class="profile">
                     <ul class="dropdown">
-                      <li><a href="#">Edit User</a></li>
+                      <li><a href="edituser.php?user_id=<?php echo $_SESSION['User_id']; ?>">Edit User</a></li>
                       <li><a href="logout.php">Sign out</a></li>
                     </ul>
                   </li>

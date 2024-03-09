@@ -26,6 +26,7 @@
        if ( $rs ) {
           if ($rs['password'] == $Password) {
           $_SESSION['Username']=$Username;
+          $_SESSION['User_id']=$rs['user_id'];
           header("Location: index.php");
        }
        else {
