@@ -52,10 +52,15 @@
     </header>
     <?php
     if (isset($_POST['btnSubmit'])) {
-        $Username = $_POST['username'];
-        $Password = $_POST['password'];
-        $Name = $_POST['name'];
-        $Age = $_POST['age'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $release_date = $_POST['release_date'];
+        $formattedDate = date("Y-m-d", strtotime($release_date));
+        $director = $_POST['director'];
+        $rating = $_POST['rating'];
+        $genre = $_POST['genre'];
+        $teaser = $_POST['teaser_url'];
+        $type = $_POST['type'];
         $pictureName = @$_FILES['picture']['name'];
         $pictureType = @$_FILES['picture']['type'];
         $pictureSize = @$_FILES['picture']['size'];
@@ -118,24 +123,40 @@
         while ($rs = mysqli_fetch_array($result)){
       ?>    
     <div class="mainbox">
-      <h1>Update User</h1>
-      <form action="#" method="post" enctype="multipart/form-data">
-        <label for="">Username</label>
-        <input type="text" name="username" value="<?php echo $rs[1]?>" placeholder=""/>
-        <br><br>
-        <label for="">Password</label>
-        <input type="text" name="password" value="<?php echo $rs[2]?>"/>
-        <br><br>
-        <label for="">Name</label>
-        <input type="text" name="name" value="<?php echo $rs[3]?>"/>
-        <br><br>
-        <label for="">Age</label>
-        <input type="text" name="age" value="<?php echo $rs[4]?>"/>
-        <br><br>
-        <label for="">Profile Picture</label>
-        <input type="file" name="picture"/>
-        <a href="deleteuser.php?user_id=<?php echo $_SESSION['User_id']; ?>"onclick="return confirm('You delete really')">Delete User</a>
-        <input name="btnSubmit" type="submit" value="Submit" class="btn" />
+    <h1>Update Movie</h1>
+      <form method="post" action="#" enctype="multipart/form-data">
+            <div class="info">
+                <div class="left">
+                    <input type="text" name="title" value="<?php echo $rs[1]?>"/>
+                    <br><br>
+                    <input type="text" name="director" value="<?php echo $rs[5]?>"/>
+                    <br><br>
+                    <textarea name="description" id="" cols="50" rows="30" style=" resize: none;" value="<?php echo $rs[2]?>"></textarea>
+                    <br><br>
+                    <input type="text" name="teaser_url" value="<?php echo $rs[3]?>"/>
+                    <br><br>
+                    <input style="color: #faf0e6;" type="file" name="picture" value="<?php echo $rs[10]?>"/>
+                    <br><br>
+                </div>
+                <div class="right">
+                    <input type="text" name="release_date" value="<?php echo $rs[4]?>"/>
+                    <br><br>
+                    <input type="text" name="rating" value="<?php echo $rs[6]?>"/>
+                    <br><br>
+                    <input type="text" name="genre" value="<?php echo $rs[8]?>"/>
+                    <br><br>
+                    <input type="text" name="running_time" value="<?php echo $rs[9]?>"/>
+                    <br><br>
+                    <label for="">Type:
+                    <select name="type" value="<?php echo $rs[7]?>">
+                        <option name="type" value="Movie">Movie</option>
+                        <option name="type" value="Series">Series</option>
+                    </select>
+                    <br><br>
+                    <input type="submit" value="Add Movie" class="btn"/>
+                    </label>
+                </div>
+            </div>
       </form>
     </div>
     <?php

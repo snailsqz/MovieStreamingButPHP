@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Movie</title>
 </head>
 <body>
-<?php
+  <?php
           session_start();
           $checkLogin = 1;
           if (!isset($_SESSION['Username'])){
@@ -25,7 +26,6 @@
             <?php }?>
             <?php if($_SESSION['User_role'] == 'Admin') {?>
             <a href="dashboardmovies.php">Movies</a>
-            <a href="dashboardusers.php">Users</a>
             <?php }?>
         </div>
         <div class="headerbox2"> 
@@ -50,12 +50,15 @@
         </div>
     </header>
     <div class="mainbox">
-      <?php
+      <table>
+        <tr>
+          <th></th><th style="text-align:center;">ID</th><th style="text-align:center;">Title</th><th style="text-align:center;">Director</th><th style="text-align:center;">Type</th><th colspan="2" style="text-align: center;">Action</th>
+        </tr>
+        <?php
           $hostname = "localhost";
           $username = "root";
           $password = "";
           $dbName = "streaming";
-          
           $conn = mysqli_connect($hostname, $username, $password);
           if(!$conn)
               die("Fail to connect");
@@ -63,44 +66,27 @@
           mysqli_query($conn,"set character_set_connection=utf8mb4");
           mysqli_query($conn,"set character_set_client=utf8mb4");
           mysqli_query($conn,"set character_set_results=utf8mb4");
-
-          $sql = "SELECT * FROM movies WHERE type = 'Movie' ORDER BY movie_id";
+          $sql = "select * from user order by user_id";
           $result = mysqli_query ($conn, $sql);
-          $num_rows = mysqli_num_rows($result); // checking if movie exists
-          mysqli_data_seek($result, 1); // result start at column 2
-          $firstmovie = "SELECT * FROM movies WHERE type = 'Movie' ORDER BY movie_id LIMIT 1";
-          $firstmovieresult = mysqli_query ($conn, $firstmovie);
-          if ($num_rows > 0) {
-            while ($rs = mysqli_fetch_array($result))
-          {
-            while ($firstrs = mysqli_fetch_array($firstmovieresult)){
-              echo "<div>";
-              echo "<a href='movie.php?movie_id=".$firstrs[0]."' class='moviedes'";
-              echo "<p>".$firstrs[1]."</p>";
-              echo "</a>";
-              echo "<a href='movie.php?movie_id=".$firstrs[0]."'><img src ='image/$firstrs[10]'class='bigimg'></a>";
-              echo "</div>";
-              break;
-            }
-            echo "<div class='imgitem'>";
-            echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]'></a>";
-            echo "<a href='movie.php?movie_id=".$rs[0]."'>".$rs[1]."</a>";
-            echo "</div>";
-          }
-          } else {
-            echo "<a style='text-decoration: none;' href='create.php'><h1>Lets start add some movie</h1></a>";
-          }
-          mysqli_close ( $conn );
-      ?>    
+          while ($rs = mysqli_fetch_array($result))
+          { ?>
+          <tr>
+            <td style="width: 100px;"><img src="image/<?php echo $rs[5]?>" alt="" class="profile"></td>
+            <td style="text-align: center; "><?php echo $rs[0]?></td>
+            <td style="width: 100px; text-align:center;"><?php echo $rs[1]?></td>
+            <td style="width: 100px; text-align:center;"><?php echo $rs[6]?></td>
+            <?php if($rs[6] == "Admin"){?>
+                <td><a href="admin.php?user_id=<?php echo $rs[0]?>" class="promote" >Promote</a></td>
+            <?php } else  {?>
+                <td><a href="admin.php?user_id=<?php echo $rs[0]?>"  style="color:#6b6dee; width: 80px;">Promote</a></td>
+            <?php } ?>
+            <td style="text-align: center; width: 80px;"><a href="edituser.php?user_id=<?php echo $rs[0]?>" style="color:#3ff78b">Edit</a></td>
+            <td style="text-align: center; width: 80px;"> <a href="deleteuser.php?user_id=<?php echo $rs[0]?>"
+              onclick="return confirm('Do you confirm to delete this user?')" style="color:#f73f3f">Delete</a></td>
+          </tr>
+      <?php } ?>
+    </table>
     </div>
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    
-    <footer>
-      <p>NetBoss &copy; 2024 KMUTNB Project</p>
-      <p>Pawee Indulakshana IT</p>
-      <p>Jiramet Sakulkitthavorn IT</p>
-      <p>Nuttawat Amorntanont IT</p>
-      <p>For Educational Purpose Only</p>
+      
 </body>
 </html>
