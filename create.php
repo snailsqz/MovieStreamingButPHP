@@ -47,7 +47,6 @@
                 ?> 
                 <ul>
                   <li>
-                    <?php?>
                     <img src="image/<?php echo $_SESSION['User_Image']?>" alt="" class="profile">
                     <ul class="dropdown">
                       <li><a href="edituser.php?user_id=<?php echo $_SESSION['User_id']; ?>">Edit User</a></li>

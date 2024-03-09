@@ -34,7 +34,6 @@
                 ?> 
                 <ul>
                   <li>
-                    <?php?>
                     <img src="image/<?php echo $_SESSION['User_Image']?>" alt="" class="profile">
                     <ul class="dropdown">
                       <li><a href="edituser.php?user_id=<?php echo $_SESSION['User_id']; ?>">Edit User</a></li>
@@ -71,25 +70,25 @@
           $num_rows = mysqli_num_rows($result);
           $counter = 0;
           if ($num_rows > 0) {
-          while ($rs = mysqli_fetch_array($result))
-          {
-            if($counter == 0){
-              echo "<div>";
-              echo "<a href='movie.php?movie_id=".$rs[0]."' class='moviedes'";
-              echo "<p>".$rs[1]."</p>";
-              echo "<p>".$rs[2]."</p>";
-              echo "</a>";
-              echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]' class='bigimg'></a>";
-              echo "</div>";
-              $counter++; 
+            while ($rs = mysqli_fetch_array($result))
+            {
+              if($counter == 0){
+                echo "<div>";
+                echo "<a href='movie.php?movie_id=".$rs[0]."' class='moviedes'";
+                echo "<p>".$rs[1]."</p>";
+                echo "<p>".$rs[2]."</p>";
+                echo "</a>";
+                echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]' class='bigimg'></a>";
+                echo "</div>";
+                $counter++; 
+              }
+              else{
+                echo "<div class='imgitem'>";
+                echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]'></a>";
+                echo "<a href='movie.php?movie_id=".$rs[0]."'>".$rs[1]."</a>";
+                echo "</div>";
+              }
             }
-            else{
-              echo "<div class='imgitem'>";
-              echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]'></a>";
-              echo "<a href='movie.php?movie_id=".$rs[0]."'>".$rs[1]."</a>";
-              echo "</div>";
-            }
-          }
         }else {
           echo "<a href='create.php' style='text-decoration: none; color: #faf0e6;  font-size: 24px;
           '>Let's start adding some movies</a>";
