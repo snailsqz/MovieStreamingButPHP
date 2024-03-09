@@ -165,9 +165,23 @@
                     <input type="text" name="running_time" value="<?php echo $rs[9]?>"/>
                     <br><br>
                     <label for="">Type:
-                    <select name="type" value="<?php echo $rs[7]?>">
+                    <select name="type">
+                    <?php
+                        if($rs[7] == "Movie"){
+                    ?>
                         <option name="type" value="Movie">Movie</option>
                         <option name="type" value="Series">Series</option>
+                    <?php
+                        }
+                    ?>
+                    <?php
+                        if($rs[7] == "Series"){
+                    ?>             
+                        <option name="type" value="Series">Series</option>
+                        <option name="type" value="Movie">Movie</option>
+                    <?php
+                        }
+                    ?>
                     </select>
                     <br><br>
                     <input type="submit" value="Update Movie" class="btn" name="btnSubmit"/>
