@@ -8,7 +8,7 @@
     <title>Movie</title>
 </head>
 <body>
-  <?php
+<?php
           session_start();
           $checkLogin = 1;
           if (!isset($_SESSION['Username'])){
@@ -19,8 +19,8 @@
         <div class="headerbox1">
             <img src="image/Logo_JS_B_shade_white.png">
             <a href="index.php">Home</a>
-            <a href="">Movies</a>
-            <a href="">Series</a>
+            <a href="typemovie.php">Movies</a>
+            <a href="typeseries.php">Series</a>
             <?php
               if($checkLogin == 1)
               echo '<a href="">Favorite</a>';
@@ -34,7 +34,8 @@
                 ?> 
                 <ul>
                   <li>
-                    <img src="image/noimage.jpg" alt="" class="profile">
+                    <?php?>
+                    <img src="image/<?php echo $_SESSION['User_Image']?>" alt="" class="profile">
                     <ul class="dropdown">
                       <li><a href="edituser.php?user_id=<?php echo $_SESSION['User_id']; ?>">Edit User</a></li>
                       <li><a href="logout.php">Sign out</a></li>
@@ -83,6 +84,7 @@
         } else {
             move_uploaded_file($_FILES["picture"]["tmp_name"],"image/".$_FILES["picture"]["name"]);
             $picture = $_FILES["picture"]["name"];
+            $_SESSION['User_Image'] = $picture;
             $sql = "UPDATE user SET username = '$Username', password = '$Password', name = '$Name', age = '$Age', image = '$picture' WHERE user_id = $userSessionId";
             $result = mysqli_query($conn, $sql);
             if ($result) {
