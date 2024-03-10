@@ -9,8 +9,13 @@
 </head>
 <body>
 <?php
-    sif (!isset($_SESSION['User_role'])){
+    session_start();
+    $checkLogin = 1;
+    if (!isset($_SESSION['User_role'])){
       $checkLogin = 0;
+      header("Location: index.php");
+    }
+    if($_SESSION['User_id'] != $_GET['user_id'] && $_SESSION['User_role'] != 'Admin') {
       header("Location: index.php");
     }
     ?>
@@ -25,7 +30,7 @@
             <?php if(isset($_SESSION['User_role']) && $_SESSION['User_role'] == 'User') {?>
             <a href="typemovie.php">Movies</a>
             <a href="typeseries.php">Series</a>
-            <a href="favorite.php">Favorite</a>
+            <a href="">Favorite</a>
             <?php }?>
             <?php if(isset($_SESSION['User_role']) && $_SESSION['User_role'] == 'Admin') {?>
             <a href="dashboardmovies.php">Movies</a>
@@ -68,7 +73,7 @@
         $username = "root";
         $password = "";
         $dbName = "streaming";
-        $userSessionId = $_SESSION['User_id'];
+        $userSessionId = $_GET['user_id'];
         $conn = mysqli_connect($hostname, $username, $password);
         if (!$conn)
             die("Fail to connect");

@@ -131,7 +131,7 @@
             $formattedDate = date("d-m-Y", strtotime($row['release_date']));
 
             echo "<h1>".$row['title']."</h1>";
-            echo "<p style='text-indent: 30px ; text-align:justify; margin-bottom:30px;'' >".$row['description']."</p>";
+            echo "<p style='text-indent: 30px ;  margin-bottom:30px; word-wrap: break-word;' >".$row['description']."</p>";
             echo '<hr style="margin-bottom:30px;">';
             echo "<p>Director: ".$row['director']."</p>";
             echo "<p>Genre: ".$row['genre']."</p>";
