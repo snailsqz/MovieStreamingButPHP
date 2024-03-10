@@ -298,13 +298,15 @@
               ?>
                 <br>
                 <a href="<?php echo 'deletecomment.php?review_id='.$rs[4]?>"onclick="return confirm('Do you confirm to remove this comment')" style="color:#f73f3f">Remove</a>
-                <?php } ?>
+              <?php
+               }
+               } 
+               ?>
               </p>
             </div>
         </div>
         <?php 
           }
-        }
         ?>
     </div>
   </div>
