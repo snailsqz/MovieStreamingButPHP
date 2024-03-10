@@ -20,7 +20,7 @@
             <img src="image/Logo_JS_B_shade_white.png">
             <a href="index.php">Home</a>
             <?php if($_SESSION['User_role'] == 'User') {?>
-              <a href="typemovie.php">Movies</a>
+            <a href="typemovie.php">Movies</a>
             <a href="typeseries.php">Series</a>
             <a href="favorite.php">Favorite</a>
             <?php }?>
@@ -49,56 +49,26 @@
               ?>
         </div>
     </header>
-    <?php
-      if(isset($_SESSION['Username']))
-        echo '<h2 class="fade-in-right"><i class="fa-solid fa-hands-clapping"></i> Welcome, ' . $_SESSION['Username'] . '!</h2>';
-      else
-        echo '<h2 class="fade-in-right" style="width: 170px;"><i class="fa-solid fa-hands-clapping"></i> Welcome !</h2>';
-    ?>
+
+    <h1 class="welcome">Your Favorite List!</h1>
     <div class="mainbox">
-      <?php
-          $hostname = "localhost";
-          $username = "root";
-          $password = "";
-          $dbName = "streaming";
-          $conn = mysqli_connect($hostname, $username, $password);
-          if(!$conn)
-              die("Fail to connect");
-          mysqli_select_db($conn, $dbName) or die("Can't Choose db");
-          mysqli_query($conn,"set character_set_connection=utf8mb4");
-          mysqli_query($conn,"set character_set_client=utf8mb4");
-          mysqli_query($conn,"set character_set_results=utf8mb4");
-          $sql = "select * from movies order by movie_id";
-          $result = mysqli_query ($conn, $sql);
-          $num_rows = mysqli_num_rows($result);
-          $counter = 0;
-          if ($num_rows > 0) {
-            while ($rs = mysqli_fetch_array($result))
-            {
-              if($counter == 0){
-                echo "<div>";
-                echo "<a href='movie.php?movie_id=".$rs[0]."' class='moviedes'";
-                echo "<p>".$rs[1]."</p>";
-                echo "<p>".$rs[2]."</p>";
-                echo "</a>";
-                echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]' class='bigimg'></a>";
-                echo "</div>";
-                $counter++; 
-              }
-              else{
-                echo "<div class='imgitem'>";
-                echo "<a href='movie.php?movie_id=".$rs[0]."'><img src ='image/$rs[10]'></a>";
-                echo "<a href='movie.php?movie_id=".$rs[0]."'>".$rs[1]."</a>";
-                echo "</div>";
-              }
-            }
-        }else {
-          echo "<a href='create.php' style='text-decoration: none; color: #faf0e6;  font-size: 24px;
-          '>Let's start adding some movies</a>";
-          }
-          mysqli_close ( $conn );
-      ?>    
+        <?php
+
+        
+        ?>
+      <!-- <% if (movies.length == 0) { %> -->
+        <p class="favtxt">No favorite now! Let's add something</p>
+      <!-- <% } %>
+      
+      <% for(let i = 0; i < movies.length; i++){%> -->
+  
+        <div class="imgitem">
+          <!-- <a href="/movie/<%=movies[i].movie_id%>"><img src="/images/<%= movies[i].imageFile %>"></a>
+          <a href="/movie/<%=movies[i].movie_id%>"><%= movies[i].title %></a> -->
+        </div>
+      <!-- <%}%> -->
     </div>
+    
     <footer style="margin: 300px 0 0 0;">
       <p>NetBoss &copy; 2024 KMUTNB Project</p>
       <table>

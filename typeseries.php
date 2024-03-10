@@ -21,7 +21,7 @@
             <?php if($_SESSION['User_role'] == 'User') {?>
             <a href="typemovie.php">Movies</a>
             <a href="typeseries.php">Series</a>
-            <a href="">Favorite</a>
+            <a href="favorite.php">Favorite</a>
             <?php }?>
             <?php if($_SESSION['User_role'] == 'Admin') {?>
             <a href="dashboardmovies.php">Movies</a>
