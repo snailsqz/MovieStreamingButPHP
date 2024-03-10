@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/movie.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Movie</title>
 </head>
 <body>
@@ -15,15 +16,19 @@
           }
     ?>
     <header>
-    <div class="headerbox1">
+        <div class="headerbox1">
             <img src="image/Logo_JS_B_shade_white.png">
             <a href="index.php">Home</a>
-            <?php if($_SESSION['User_role'] == 'User') {?>
+            <?php if(!isset($_SESSION['User_role'])) {?>
+              <a href="typemovie.php">Movies</a>
+              <a href="typeseries.php">Series</a>
+            <?php }?>
+            <?php if(isset($_SESSION['User_role']) && $_SESSION['User_role'] == 'User') {?>
             <a href="typemovie.php">Movies</a>
             <a href="typeseries.php">Series</a>
             <a href="favorite.php">Favorite</a>
             <?php }?>
-            <?php if($_SESSION['User_role'] == 'Admin') {?>
+            <?php if(isset($_SESSION['User_role']) && $_SESSION['User_role'] == 'Admin') {?>
             <a href="dashboardmovies.php">Movies</a>
             <a href="dashboardusers.php">Users</a>
             <?php }?>
@@ -110,6 +115,18 @@
             </div>
         </div>
         <div class="box2">
+          <?php if(isset($_GET['event'])){
+              $event = $_GET['event'];
+              if ($event == "Favbtn"){?>
+              
+            <h2 class="fade-in-right "><i class="fa-regular fa-heart"></i>⠀Add to your favorite!</h2>
+          <?php } ?>
+          <?php if ($event == "unFavbtn"){?>
+            <h2 class="fade-in-right "><i class="fa-solid fa-xmark"></i>⠀Unfavorite this movie!</h2>
+          <?php } ?>
+          <?php } else{
+
+          } ?>
             <?php
             $formattedDate = date("d-m-Y", strtotime($row['release_date']));
 
@@ -140,10 +157,9 @@
 
               $userID = $_SESSION['User_id'];
               $movie_id = $_GET['movie_id'];
-
               $sql = "insert into favorite(movie_id, user_id) values ('$movie_id','$userID')";
               mysqli_query($conn, $sql) or die("Error at Fav " .mysqli_error($conn));
-              header("Location: movie.php?movie_id=$movie_id");
+              header("Location: movie.php?movie_id=$movie_id&event=Favbtn");
             }
             if(isset($_GET['unFavbtn']))
             {
@@ -166,7 +182,7 @@
               $sql = "DELETE FROM favorite WHERE favorite.movie_id = $movie_id AND favorite.user_id = $userID";
               $result = mysqli_query($conn, $sql);
               
-              header("Location: movie.php?movie_id=$movie_id");
+              header("Location: movie.php?movie_id=$movie_id&event=unFavbtn");
             }
           ?>  
         <form method="get" action="#">
@@ -180,25 +196,21 @@
           $conn = mysqli_connect( $hostname, $username, $password );
           if ( ! $conn ) die ( "ไม่สามารถติดต่อกับ MySQL ได้");
           mysqli_select_db ( $conn, $dbname )or die ( "ไม่สามารถเลือกฐานข้อมูล streaming ได้" );
-          if (isset($_SESSION['Username'])){
-           
-          
-          $userID = $_SESSION['User_id'];
-          $movie_id = $_GET['movie_id'];
-          $query = "SELECT movies.movie_id, movies.title, user.user_id, user.username, favorite.Fmovie_id
-          FROM movies
-          INNER JOIN favorite ON movies.movie_id = favorite.movie_id
-          INNER JOIN user ON favorite.user_id = user.user_id
-          WHERE favorite.movie_id = $movie_id AND user.user_id = $userID";
+            if (isset($_SESSION['Username'])){
+            $userID = $_SESSION['User_id'];
+            $movie_id = $_GET['movie_id'];
+            $query = "SELECT movies.movie_id, movies.title, user.user_id, user.username, favorite.Fmovie_id
+            FROM movies
+            INNER JOIN favorite ON movies.movie_id = favorite.movie_id
+            INNER JOIN user ON favorite.user_id = user.user_id
+            WHERE favorite.movie_id = $movie_id AND user.user_id = $userID";
 
-          $result = mysqli_query($conn, $query);
-          $rs = mysqli_fetch_array($result);
-          if(mysqli_num_rows($result) > 0){ ?>
-            <button name = 'unFavbtn' type='submit' class='btn2'>Unfavorite</button>
+            $result = mysqli_query($conn, $query);
+            $rs = mysqli_fetch_array($result);
+            if(mysqli_num_rows($result) > 0){ ?>
+              <button name = 'unFavbtn' type='submit' class='btn2'>Unfavorite</button>
           <?php } else { ?>
-
-            <button name='Favbtn' type='submit' class='btn'>Favorite</button>
-
+              <button name='Favbtn' type='submit' class='btn'>Favorite</button>
           <?php 
           } 
         }
