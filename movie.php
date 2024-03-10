@@ -110,7 +110,6 @@
             </div>
         </div>
         <div class="box2">
-            <!-- <h2 class="fade-in-right "><i class="fa-regular fa-heart"></i>⠀ Add to your favorite!</h2> -->
             <?php
             $formattedDate = date("d-m-Y", strtotime($row['release_date']));
 
@@ -124,16 +123,89 @@
             echo "<p>Rating: ".$row['rating']."</p>";
             echo "<p>Running Time: ".$row['running_time']."</p>";
             ?>
-        </div>
-        <!-- <form method="post" action="/favorite">
-          <input hidden type="text" name="movie_id" value="<%=movie.movie_id %>">
-          <input hidden type="text" name="user_id" value="<%=moviedata.user_id %>">
-          <% if (!favoriteStatus) { %>
-            <button type="submit" class="btn">Favorite</button>
-          <% } else { %>
-            <button type="submit" class="btn2">Unfavorite</button>
-          <% } %>
-        </form> -->
+
+        <?php
+          if(isset($_GET['Favbtn']))
+            {
+              $hostname = "localhost";
+              $username = "root";
+              $password = "";
+              $dbname = "streaming";
+              $conn = mysqli_connect( $hostname, $username, $password );
+              if ( ! $conn ) die ( "ไม่สามารถติดต่อกับ MySQL ได้");
+              mysqli_select_db ( $conn, $dbname )or die ( "ไม่สามารถเลือกฐานข้อมูล streaming ได้" );
+              mysqli_query($conn,"set character_set_connection=utf8mb4");
+              mysqli_query($conn,"set character_set_client=utf8mb4");
+              mysqli_query($conn,"set character_set_results=utf8mb4");
+
+              $userID = $_SESSION['User_id'];
+              $movie_id = $_GET['movie_id'];
+
+              $sql = "insert into favorite(movie_id, user_id) values ('$movie_id','$userID')";
+              mysqli_query($conn, $sql) or die("Error at Fav " .mysqli_error($conn));
+              header("Location: movie.php?movie_id=$movie_id");
+            }
+            if(isset($_GET['unFavbtn']))
+            {
+              $hostname = "localhost";
+              $username = "root";
+              $password = "";
+              $dbName = "streaming";
+              $conn = mysqli_connect($hostname, $username, $password);
+              if (!$conn) {
+                      die("Fail to connect");
+              }
+              mysqli_select_db($conn, $dbName) or die("Can't Choose db");
+              mysqli_query($conn, "set character_set_connection=utf8mb4");
+              mysqli_query($conn, "set character_set_client=utf8mb4");
+              mysqli_query($conn, "set character_set_results=utf8mb4");
+
+              $userID = $_SESSION['User_id'];
+              $movie_id = $_GET['movie_id'];
+
+              $sql = "DELETE FROM favorite WHERE favorite.movie_id = $movie_id AND favorite.user_id = $userID";
+              $result = mysqli_query($conn, $sql);
+              
+              header("Location: movie.php?movie_id=$movie_id");
+            }
+          ?>  
+        <form method="get" action="#">
+          <input type='hidden' name='movie_id' value='<?php echo $_GET['movie_id'] ?>'>
+
+          <?php
+          $hostname = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "streaming";
+          $conn = mysqli_connect( $hostname, $username, $password );
+          if ( ! $conn ) die ( "ไม่สามารถติดต่อกับ MySQL ได้");
+          mysqli_select_db ( $conn, $dbname )or die ( "ไม่สามารถเลือกฐานข้อมูล streaming ได้" );
+          if (isset($_SESSION['Username'])){
+           
+          
+          $userID = $_SESSION['User_id'];
+          $movie_id = $_GET['movie_id'];
+          $query = "SELECT movies.movie_id, movies.title, user.user_id, user.username, favorite.Fmovie_id
+          FROM movies
+          INNER JOIN favorite ON movies.movie_id = favorite.movie_id
+          INNER JOIN user ON favorite.user_id = user.user_id
+          WHERE favorite.movie_id = $movie_id AND user.user_id = $userID";
+
+          $result = mysqli_query($conn, $query);
+          $rs = mysqli_fetch_array($result);
+          if(mysqli_num_rows($result) > 0){ ?>
+            <button name = 'unFavbtn' type='submit' class='btn2'>Unfavorite</button>
+          <?php } else { ?>
+
+            <button name='Favbtn' type='submit' class='btn'>Favorite</button>
+
+          <?php 
+          } 
+        }
+          ?>
+          </div>
+
+        </form>
     </div>
   </div>
   <div class="box3">
@@ -167,9 +239,8 @@
       <?php  if (isset($_SESSION['Username'])){ ?>
         <label for="">Score</label>  
       <form method="get" action="#" class="formment">
-        <?php
-        echo "<input type='hidden' name='movie_id' value='$movieIdURL'>";
-        ?>
+         <input type='hidden' name='movie_id' value='<?php echo $_GET['movie_id'] ?>'>
+        
         <input type="number" name="score" id="myinput" min="0" max="5"  placeholder="0" >
         <div>
         <textarea required name="comment" id="commenting" cols="30" rows="5" placeholder="Comment Here"  oninvalid="this.setCustomValidity('Please Comment First')" oninput="this.setCustomValidity('')"></textarea>
