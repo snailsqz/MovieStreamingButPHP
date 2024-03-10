@@ -135,13 +135,14 @@
         $password = "";
         $dbName = "streaming";
         $conn = mysqli_connect($hostname, $username, $password);
+        $movie_id2 = $_GET['movie_id'];
         if(!$conn)
             die("Fail to connect");
         mysqli_select_db($conn, $dbName) or die("Can't Choose db");
         mysqli_query($conn,"set character_set_connection=utf8mb4");
         mysqli_query($conn,"set character_set_client=utf8mb4");
         mysqli_query($conn,"set character_set_results=utf8mb4");
-        $sql = "select * from movies order by movie_id";
+        $sql = "SELECT * FROM movies WHERE movie_id = $movie_id2";
         $result = mysqli_query ($conn, $sql);
         $counter = 0;
         while ($rs = mysqli_fetch_array($result)){
