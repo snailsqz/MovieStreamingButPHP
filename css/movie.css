@@ -460,6 +460,14 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 1536px) {
+  .box1 div:nth-of-type(1) img {
+    width: 80%;
+    height: 90%;
+  }
+  iframe {
+    width: 650px;
+    height: 350px;
+  }
 }
 
 @media screen and (max-width: 1440px) {

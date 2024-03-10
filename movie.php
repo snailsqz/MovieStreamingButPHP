@@ -270,7 +270,7 @@
         FROM movies
         INNER JOIN reviews ON movies.movie_id = reviews.movie_id
         INNER JOIN user ON reviews.user_id = user.user_id
-        WHERE reviews.movie_id = $movie_id;";
+        WHERE reviews.movie_id = $movie_id;"; 
         $resultcomment = mysqli_query ($conn, $commentsql);
         while ($rs = mysqli_fetch_array($resultcomment))
         {
