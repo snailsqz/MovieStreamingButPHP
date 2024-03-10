@@ -18,12 +18,16 @@
         <div class="headerbox1">
             <img src="image/Logo_JS_B_shade_white.png">
             <a href="index.php">Home</a>
-            <?php if($_SESSION['User_role'] == 'User') {?>
+            <?php if(!isset($_SESSION['User_role'])) {?>
+              <a href="typemovie.php">Movies</a>
+              <a href="typeseries.php">Series</a>
+            <?php }?>
+            <?php if(isset($_SESSION['User_role']) && $_SESSION['User_role'] == 'User') {?>
             <a href="typemovie.php">Movies</a>
             <a href="typeseries.php">Series</a>
             <a href="">Favorite</a>
             <?php }?>
-            <?php if($_SESSION['User_role'] == 'Admin') {?>
+            <?php if(isset($_SESSION['User_role']) && $_SESSION['User_role'] == 'Admin') {?>
             <a href="dashboardmovies.php">Movies</a>
             <a href="dashboardusers.php">Users</a>
             <?php }?>
@@ -36,7 +40,6 @@
                 ?> 
                 <ul>
                   <li>
-                    <?php?>
                     <img src="image/<?php echo $_SESSION['User_Image']?>" alt="" class="profile">
                     <ul class="dropdown">
                       <li><a href="edituser.php?user_id=<?php echo $_SESSION['User_id']; ?>">Edit User</a></li>
