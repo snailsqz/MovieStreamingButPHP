@@ -9,11 +9,15 @@
 </head>
 <body>
   <?php
-          session_start();
-          $checkLogin = 1;
-          if (!isset($_SESSION['Username'])){
-            $checkLogin = 0;
-          }
+    session_start();
+    $checkLogin = 1;
+    if (!isset($_SESSION['User_role'])){
+      $checkLogin = 0;
+      header("Location: login.php");
+    }
+    if(isset($_SESSION['User_role']) && $_SESSION['User_role'] == 'User') {
+      header("Location: login.php");
+    }
     ?>
     <header>
         <div class="headerbox1">

@@ -9,10 +9,9 @@
 </head>
 <body>
 <?php
-    session_start();
-    $checkLogin = 1;
-    if (!isset($_SESSION['Username'])){
+    sif (!isset($_SESSION['User_role'])){
       $checkLogin = 0;
+      header("Location: index.php");
     }
     ?>
     <header>

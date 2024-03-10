@@ -21,11 +21,15 @@
     mysqli_query($conn, "set character_set_results=utf8mb4");
 ?>
 <body>
-<?php
+  <?php
           session_start();
           $checkLogin = 1;
-          if (!isset($_SESSION['Username'])){
+          if (!isset($_SESSION['User_role'])){
             $checkLogin = 0;
+            header("Location: index.php");
+          }
+          if(isset($_SESSION['User_role']) && $_SESSION['User_role'] == 'User') {
+            header("Location: index.php");
           }
     ?>
     <header>
