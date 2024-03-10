@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/login.css" />
-        <title>deletemovie</title>
+        <title>deletecomment</title>
     </head>
     <body>
         <?php
@@ -21,24 +21,15 @@
             mysqli_query($conn, "set character_set_client=utf8mb4");
             mysqli_query($conn, "set character_set_results=utf8mb4");
 
-            $movie_id = $_GET['movie_id'];
+            $review_id = $_GET['review_id'];
             
-            $sqlpicture = "SELECT picture FROM movies WHERE movie_id = $movie_id";
-            $movie_picture = mysqli_query($conn, $sqlpicture);
-            if ($movie_picture) {
-                $row = mysqli_fetch_assoc($movie_picture);
-                $picture = $row['picture'];
-                if ($picture != "noimage2.jpg") {
-                    $imagePath = "image/$picture";
-                    if (file_exists($imagePath)) {
-                        unlink($imagePath);
-                    }
-                }
-            }
-            $sql = "DELETE FROM movies WHERE movie_id = $movie_id";
+            $sqlmovie = "SELECT movie_id FROM reviews WHERE review_id = $review_id";
+            $resultmovie_ID = mysqli_query ($conn, $sqlmovie);
+            $rs = mysqli_fetch_array($resultmovie_ID);
+            $sql = "DELETE FROM reviews WHERE review_id = $review_id";
             $result = mysqli_query($conn, $sql);
             
-            header("Location: dashboardmovies.php");
+            header("Location: movie.php?movie_id='$rs[0]'");
         ?>
     </body>
 </html>

@@ -15,15 +15,18 @@
           }
     ?>
     <header>
-        <div class="headerbox1">
+    <div class="headerbox1">
             <img src="image/Logo_JS_B_shade_white.png">
             <a href="index.php">Home</a>
+            <?php if($_SESSION['User_role'] == 'User') {?>
             <a href="typemovie.php">Movies</a>
             <a href="typeseries.php">Series</a>
-            <?php
-              if($checkLogin == 1)
-              echo '<a href="">Favorite</a>';
-            ?>
+            <a href="">Favorite</a>
+            <?php }?>
+            <?php if($_SESSION['User_role'] == 'Admin') {?>
+            <a href="dashboardmovies.php">Movies</a>
+            <a href="dashboardusers.php">Users</a>
+            <?php }?>
         </div>
         <div class="headerbox2"> 
             <?php
@@ -209,17 +212,16 @@
                 $checkLogin = 0;
               } else {
                 if ($_SESSION['User_id'] == $rs[1]){
-                  echo "<br>";
-                }
               ?>
-             <br>
-                <a href="/deletereview/<%=reviewData[i].review_id%>" onclick="return confirm('Do you confirm?')">Remove</a>
+                <br>
+                <a href="<?php echo 'deletecomment.php?review_id='.$rs[4]?>"onclick="return confirm('Do you confirm to remove this comment')" style="color:#f73f3f">Remove</a>
+                <?php } ?>
               </p>
             </div>
         </div>
         <?php 
           }
-        } 
+        }
         ?>
     </div>
   </div>
