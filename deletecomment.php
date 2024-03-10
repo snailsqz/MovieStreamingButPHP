@@ -29,7 +29,7 @@
             $sql = "DELETE FROM reviews WHERE review_id = $review_id";
             $result = mysqli_query($conn, $sql);
             
-            header("Location: movie.php?movie_id='$rs[0]'");
+            header("Location: movie.php?movie_id=$rs[0]");
         ?>
     </body>
 </html>
