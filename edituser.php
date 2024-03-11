@@ -118,8 +118,8 @@
         mysqli_query($conn,"set character_set_connection=utf8mb4");
         mysqli_query($conn,"set character_set_client=utf8mb4");
         mysqli_query($conn,"set character_set_results=utf8mb4");
-        $userSessionId = $_SESSION['User_id'];
-        $sql = "SELECT * FROM user WHERE user_id = $userSessionId";
+        $userid = $_GET['user_id'];
+        $sql = "SELECT * FROM user WHERE user_id = $userid";
         $result = mysqli_query ($conn, $sql);
         $counter = 0;
         while ($rs = mysqli_fetch_array($result)){
