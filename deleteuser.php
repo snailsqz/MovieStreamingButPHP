@@ -28,6 +28,10 @@
                 
                 $sql = "DELETE FROM user WHERE user_id = $user_id";
                 $result = mysqli_query($conn, $sql);
+                $sql2 = "DELETE FROM favorite WHERE user_id = $user_id";
+                $result2 = mysqli_query($conn, $sql2);
+                $sql3 = "DELETE FROM reviews WHERE user_id = $user_id";
+                $result3 = mysqli_query($conn, $sql3);
                 if($userSessionImage != "noimage.jpg"){
                     $imagePath = "image/$userSessionImage";
                     if (file_exists($imagePath)) {

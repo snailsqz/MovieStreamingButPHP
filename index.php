@@ -122,6 +122,14 @@
           <td>Nuttawat Amorntanont</td>
           <td><a href="https://github.com/Nuttawat28"><i class="fa-brands fa-github" style="font-size: 20px; color:aliceblue;"></i></a></td>
         </tr>
+        <tr>
+          <td>Thwainee Aruk </td>
+          <td><a href="https://github.com/Nuttawat28"><i class="fa-brands fa-github" style="font-size: 20px; color:aliceblue;"></i></a></td>
+        </tr>
+        <tr>
+          <td>Ampuchinee Yodtaisong </td>
+          <td><a href="https://github.com/Nuttawat28"><i class="fa-brands fa-github" style="font-size: 20px; color:aliceblue;"></i></a></td>
+        </tr>
 
       </table>
       <p>For Educational Purpose Only</p>
